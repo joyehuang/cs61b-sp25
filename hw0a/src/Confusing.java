@@ -30,6 +30,16 @@ public class Confusing {
 
 /* Before running the code, type your answer below.
 
-TODO: Write output here
+I am method1.
+I am method1.
+I am method2.
+I am method3.
+I am method1.
+I am method1.
+I am method2.
+I am method1.
+I am method2.
+I am method3.
+I am method1.
 
 Then, click the green play button to check your work. */
