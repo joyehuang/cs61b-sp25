@@ -20,26 +20,31 @@ public class GameLogic {
      *              if no merge occurs, then return 0.
      */
     public static int moveTileUpAsFarAsPossible(int[][] board, int r, int c, int minR) {
+        boolean changed = false;
         if (r == 0){
             return 0;
         }
         for (int i = r; i > 0; i--){
             /* move up because top is empty square*/
-            if (board[i-1][c] == 0){
+            if (board[i-1][c] == 0 && i > minR ){
                 board[i-1][c] = board[i][c];
                 board[i][c] = 0;
+                changed = true;
             }
             /* merge because top has the same tile*/
-            else if (board[i-1][c] == board[i][c]){
+            else if (board[i-1][c] == board[i][c] && i > minR){
                 board[i-1][c] = 2 * board[i][c];
                 board[i][c] = 0;
+                changed = true;
                 return i-1+1;
             }
             else if (board[i-1][c] != board[i][c]){
                 return 0;
             }
         }
-        board[r][c] = 0;
+        if (changed){
+            board[r][c] = 0;
+        }
         return 0;
     }
 
