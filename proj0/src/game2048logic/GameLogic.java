@@ -24,9 +24,19 @@ public class GameLogic {
             return 0;
         }
         for (int i = r; i > 0; i--){
+            /* move up because top is empty square*/
             if (board[i-1][c] == 0){
                 board[i-1][c] = board[i][c];
                 board[i][c] = 0;
+            }
+            /* merge because top has the same tile*/
+            else if (board[i-1][c] == board[i][c]){
+                board[i-1][c] = 2 * board[i][c];
+                board[i][c] = 0;
+                return i-1+1;
+            }
+            else if (board[i-1][c] != board[i][c]){
+                return 0;
             }
         }
         board[r][c] = 0;
