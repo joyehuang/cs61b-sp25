@@ -20,7 +20,6 @@ public class GameLogic {
      *              if no merge occurs, then return 0.
      */
     public static int moveTileUpAsFarAsPossible(int[][] board, int r, int c, int minR) {
-        boolean changed = false;
         if (r == 0){
             return 0;
         }
@@ -29,21 +28,16 @@ public class GameLogic {
             if (board[i-1][c] == 0 && i > minR ){
                 board[i-1][c] = board[i][c];
                 board[i][c] = 0;
-                changed = true;
             }
             /* merge because top has the same tile*/
             else if (board[i-1][c] == board[i][c] && i > minR){
-                board[i-1][c] = 2 * board[i][c];
+                board[i-1][c] *= 2;
                 board[i][c] = 0;
-                changed = true;
-                return i-1+1;
+                return i;
             }
-            else if (board[i-1][c] != board[i][c]){
-                return 0;
+            else {
+                break;
             }
-        }
-        if (changed){
-            board[r][c] = 0;
         }
         return 0;
     }
@@ -56,12 +50,14 @@ public class GameLogic {
      * @param c         the column to tilt up.
      */
     public static void tiltColumn(int[][] board, int c) {
-        int mergedRow = 0;
-        for (int i = 0; i < board.length; i++){
-            if (moveTileUpAsFarAsPossible(board, i, c, mergedRow) > mergedRow){
-                mergedRow++;
+        int mergedRow = -1;
+        for (int i = 1; i < board.length; i++){
+            if (board[i][c] != 0){
+                int newMergedRow = moveTileUpAsFarAsPossible(board, i, c, mergedRow);
+                if (newMergedRow > mergedRow){
+                    mergedRow = newMergedRow;
+                }
             }
-            moveTileUpAsFarAsPossible(board, i, c, mergedRow);
         }
         return;
     }
@@ -72,7 +68,9 @@ public class GameLogic {
      * @param board     the current state of the board.
      */
     public static void tiltUp(int[][] board) {
-        // TODO: fill this in in task 6
+        for (int i = 0; i < board.length; i++){
+            tiltColumn(board, i);
+        }
         return;
     }
 
