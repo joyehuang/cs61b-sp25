@@ -86,4 +86,14 @@ public class LinkedListDeque61BTest {
         lld1.addLast(1);
         assertThat(lld1.size()).isEqualTo(2); // 2
     }
+
+    @Test
+    /** This test will test large assertations of deque */
+    public void testLargeSize() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+        for (int i = 0; i < 1000; i++){
+            lld1.addLast(i);
+        }
+        assertThat(lld1.size()).isEqualTo(1000);
+    }
 }
