@@ -98,6 +98,32 @@ public class LinkedListDeque61BTest {
     }
 
     @Test
+    /** This test will test size with remove methods */
+    public void testSizeWithRemove() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+
+        assertThat(lld1.size()).isEqualTo(0); // 0
+        lld1.addFirst(0);
+        assertThat(lld1.size()).isEqualTo(1); // 1
+        lld1.addLast(1);
+        assertThat(lld1.size()).isEqualTo(2); // 2
+        lld1.removeFirst();
+        assertThat(lld1.size()).isEqualTo(1); // 1
+        lld1.removeLast();
+        assertThat(lld1.size()).isEqualTo(0); // 0
+    }
+
+    @Test
+    /** This test will test size and isEmpty methods with first add then remove */
+    public void testAddThenRemove() {
+        Deque61B<Integer> lld = new LinkedListDeque61B<>();
+        lld.addFirst(0);
+        lld.removeFirst();
+        assertThat(lld.size()).isEqualTo(0);
+        assertThat(lld.isEmpty()).isTrue();
+    }
+
+    @Test
     /** This test will test basic get method */
     public void testGet() {
         Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
@@ -118,6 +144,22 @@ public class LinkedListDeque61BTest {
     }
 
     @Test
+    /** This test will test get method of large assertations of deque */
+    public void testGetLarge() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+        for (int i = 0; i < 1000; i++){
+            lld1.addLast(i);
+        }
+        assertThat(lld1.get(-1)).isEqualTo(null);
+        assertThat(lld1.get(0)).isEqualTo(0);
+        assertThat(lld1.get(200)).isEqualTo(200);
+        assertThat(lld1.get(567)).isEqualTo(567);
+        assertThat(lld1.get(798)).isEqualTo(798);
+        assertThat(lld1.get(999)).isEqualTo(999);
+        assertThat(lld1.get(1000)).isEqualTo(null);
+    }
+
+    @Test
     /** This test will test basic getRecusive method */
     public void testGetRecursive() {
         Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
@@ -135,5 +177,75 @@ public class LinkedListDeque61BTest {
         assertThat(lld1.getRecursive(1)).isEqualTo(0);
         assertThat(lld1.getRecursive(2)).isEqualTo(1);
         assertThat(lld1.getRecursive(3)).isEqualTo(2);
+    }
+
+    @Test
+    /** This test will test getRecursive method of large assertations of deque */
+    public void testGetRecursiveLarge() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+        for (int i = 0; i < 1000; i++){
+            lld1.addLast(i);
+        }
+        assertThat(lld1.getRecursive(-1)).isEqualTo(null);
+        assertThat(lld1.getRecursive(0)).isEqualTo(0);
+        assertThat(lld1.getRecursive(200)).isEqualTo(200);
+        assertThat(lld1.getRecursive(567)).isEqualTo(567);
+        assertThat(lld1.getRecursive(798)).isEqualTo(798);
+        assertThat(lld1.getRecursive(999)).isEqualTo(999);
+        assertThat(lld1.getRecursive(1000)).isEqualTo(null);
+    }
+
+    @Test
+    /** This test is for removeFirst method basic conditions */
+    public void testRemoveFirst() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+
+        assertThat(lld1.removeFirst()).isEqualTo(null);
+
+        lld1.addFirst(0);
+        lld1.addLast(1);
+        lld1.addFirst(-1);
+
+        assertThat(lld1.removeFirst()).isEqualTo(-1);
+        assertThat(lld1.removeFirst()).isEqualTo(0);
+        assertThat(lld1.removeFirst()).isEqualTo(1);
+    }
+
+    @Test
+    /** This test is for removeLast method basic conditions */
+    public void testRemoveLast() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+
+        assertThat(lld1.removeLast()).isEqualTo(null);
+
+        lld1.addFirst(0);
+        lld1.addFirst(-1);
+        lld1.addLast(1);
+
+        assertThat(lld1.removeLast()).isEqualTo(1);
+        assertThat(lld1.removeLast()).isEqualTo(0);
+        assertThat(lld1.removeLast()).isEqualTo(-1);
+    }
+
+    @Test
+    /** This test if for random calls on removeLast and removeFirst methods */
+    public void testRemove() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+
+        assertThat(lld1.removeFirst()).isEqualTo(null);
+        assertThat(lld1.removeLast()).isEqualTo(null);
+
+        lld1.addLast(0);   // [0]
+        lld1.addLast(1);   // [0, 1]
+        lld1.addFirst(-1); // [-1, 0, 1]
+        lld1.addLast(2);   // [-1, 0, 1, 2]
+        lld1.addFirst(-2); // [-2, -1, 0, 1, 2]
+
+        assertThat(lld1.removeLast()).isEqualTo(2);
+        assertThat(lld1.removeFirst()).isEqualTo(-2);
+        assertThat(lld1.removeFirst()).isEqualTo(-1);
+        assertThat(lld1.removeLast()).isEqualTo(1);
+        assertThat(lld1.removeLast()).isEqualTo(0);
+        assertThat(lld1.removeFirst()).isEqualTo(null);
     }
 }
