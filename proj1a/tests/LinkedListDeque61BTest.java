@@ -96,4 +96,24 @@ public class LinkedListDeque61BTest {
         }
         assertThat(lld1.size()).isEqualTo(1000);
     }
+
+    @Test
+    /** This test will test basic get method */
+    public void testGet() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+
+        assertThat(lld1.get(0)).isEqualTo(null);
+        lld1.addFirst(0);
+        assertThat(lld1.get(0)).isEqualTo(0);
+        lld1.addLast(1);
+        assertThat(lld1.get(0)).isEqualTo(0);
+        assertThat(lld1.get(1)).isEqualTo(1);
+        lld1.addLast(2);
+        lld1.addFirst(-1);
+        assertThat(lld1.get(-1)).isEqualTo(null);
+        assertThat(lld1.get(0)).isEqualTo(-1);
+        assertThat(lld1.get(1)).isEqualTo(0);
+        assertThat(lld1.get(2)).isEqualTo(1);
+        assertThat(lld1.get(3)).isEqualTo(2);
+    }
 }
